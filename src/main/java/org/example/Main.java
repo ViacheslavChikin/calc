@@ -69,8 +69,8 @@ public class Main {
             "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"};
 
     static boolean isRim(String string) {
-        for (int i = 0; i < rim.length; i++) {
-            if (string.equals(rim[i])) return true;
+        for (String s : rim) {
+            if (string.equals(s)) return true;
         }
         return false;
     }
@@ -85,6 +85,6 @@ public class Main {
     static String toRim(int i) {
         return rim[i];
     }
-
 }
+
 
