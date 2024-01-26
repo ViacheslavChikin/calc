@@ -1,31 +1,31 @@
 package org.example;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("Введите два числа (ОТ 1 ДО 10, можно римскими или арабскими цифрами)" +
                 " и арифметическую опирацию между ними");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String input = reader.readLine();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
         System.out.println(calc(input));
     }
 
-    public static String calc(String input) throws Exception {
-        String matematicheskoeDeistvie;
+    public static String calc(String input) {
+
         int rezultat;
         String rezultat1;
         int chislo1 = 0;
         int chislo2 = 0;
         boolean isRim = false;
 
-        String[] chisla = input.split("[+\\-/*]");
 
-        if (chisla.length != 2) throw new Exception("Должно быть два числа и математическое действие между ними");
+        String[] chisla = input.split("[*+\\-/]");
+
+        if (chisla.length != 2)
+            throw new RuntimeException("Должно быть два числа и математическое действие между ними");
 
         if (!isRim(chisla[0]) && isRim(chisla[1]) || (isRim(chisla[0]) && !isRim(chisla[1])))
-            throw new Exception(" Числа должны быть одновременно или римскими или арабскими ");
+            throw new RuntimeException(" Числа должны быть одновременно или римскими или арабскими ");
 
         if (isRim(chisla[0]) && isRim(chisla[1])) {
             chislo1 = toArab(chisla[0]);
@@ -38,12 +38,16 @@ public class Main {
         }
 
         if (chislo1 > 10 || chislo1 < 1 || chislo2 > 10 || chislo2 < 1)
-            throw new Exception(" Числа должны быть ОТ 1 ДО 10");
+            throw new RuntimeException(" Числа должны быть ОТ 1 ДО 10");
 
         rezultat = vichislrnie(chislo1, chislo2, input);
         rezultat1 = String.valueOf(rezultat);
 
-        if (isRim == true) {
+        if (isRim) {
+            if (rezultat < 1) {
+                throw new RuntimeException("Результатом работы калькулятора с римскими числами " +
+                        "могут быть только положительные числа");
+            }
             rezultat1 = toRim(rezultat);
         }
 
@@ -86,5 +90,3 @@ public class Main {
         return rim[i];
     }
 }
-//
-
